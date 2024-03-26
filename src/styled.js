@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import background from "assets/images/background.jpg";
 
 export const Main = styled.div`
   display: grid;
@@ -11,7 +10,7 @@ export const Main = styled.div`
     display: flex;
     .item {
       text-align: center;
-      .ant-upload.ant-upload-select-picture-card {
+      .ant-upload {
         height: 200px;
         width: 200px;
       }

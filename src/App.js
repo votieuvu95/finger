@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Main } from "./styled";
-import Image from "components/Image";
-import { Upload, message, Card } from "antd";
+import Image from "../src/Image";
+import { Upload, Card } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import axios from "axios";
 
@@ -26,7 +26,7 @@ const HomePage = () => {
   const handleChange = (info) => {
     if (info.file.status === "uploading") {
       setLoading(true);
-      return
+      return;
     }
     if (info.file.status === "done") {
       var bodyFormData = new FormData();
@@ -35,9 +35,7 @@ const HomePage = () => {
         method: "post",
         url: "https://fingers-api.vnest.vn/identify_fingerprint/demo",
         data: bodyFormData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        headers: { "Content-Type": "multipart/form-data" },
       })
         .then(function (response) {
           const data = response?.data;
@@ -79,31 +77,21 @@ const HomePage = () => {
       </div>
     </button>
   );
-  const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/bmp';
-    if (!isJpgOrPng) {
-      message.error('You can only upload JPG/PNG file!');
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      message.error('Image must smaller than 2MB!');
-    }
-    return isJpgOrPng && isLt2M;
-  };
-  
+  console.log("state?.file", state?.finger_position);
 
   return (
     <Main>
       <div className="image">
         <div className="item">
-          <div>Ảnh mẫu</div>
+          <div style={{ marginBottom: "5px" }}>Ảnh mẫu</div>
           <Upload
             name="avatar"
             listType="picture-card"
             className="avatar-uploader"
             showUploadList={false}
+            action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
             onChange={handleChange}
-            beforeUpload={beforeUpload}
+            accept=".png,.jpg,.jpeg,.bmp"
             customRequest={({ onSuccess }) => {
               onSuccess(null, {});
             }}
@@ -116,20 +104,23 @@ const HomePage = () => {
           </Upload>
         </div>
         <div className="item" style={{ paddingLeft: "30px" }}>
-          <div>Ảnh khớp</div>
+          <div style={{ marginBottom: "5px" }}>Ảnh khớp</div>
           <Image width={200} height={200} src={state?.file || "error"} />
         </div>
       </div>
 
       <Card title="Thông tin">
-        <div style={{ display: "flex" }}>
-          <p>Tên</p> : <b>{state?.person_name}</b>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p>Tên</p> :{" "}
+          <b  style={{ paddingLeft: "10px" }}>{state?.person_name}</b>
         </div>
-        <div style={{ display: "flex" }}>
-          <p>Hand</p> : <b>{state?.finger_position?.split("_")?.[1]}</b>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p >Hand</p> :{" "}
+          <b style={{ paddingLeft: "10px" }}>{state?.finger_position?.split("_")?.[1]}</b>
         </div>
-        <div style={{ display: "flex" }}>
-          <p>Position</p> : <b>{state?.finger_position?.split("_")?.[2]}</b>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p >Position</p> :{" "}
+          <b style={{ paddingLeft: "10px" }}>{state?.finger_position?.split("_")?.[2]}</b>
         </div>
       </Card>
     </Main>
