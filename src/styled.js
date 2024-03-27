@@ -11,8 +11,9 @@ export const Main = styled.div`
     .item {
       text-align: center;
       .ant-upload {
-        height: 200px;
-        width: 200px;
+        height: 206px;
+        width: 192px;
+        object-fit: contain;
       }
     }
   }

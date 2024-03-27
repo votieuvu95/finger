@@ -105,7 +105,7 @@ const HomePage = () => {
         </div>
         <div className="item" style={{ paddingLeft: "30px" }}>
           <div style={{ marginBottom: "5px" }}>Ảnh khớp</div>
-          <Image width={200} height={200} src={state?.file || "error"} />
+          <Image width={192} height={206} src={state?.file || "error"} />
         </div>
       </div>
 
