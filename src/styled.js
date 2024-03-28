@@ -25,5 +25,13 @@ export const Main = styled.div`
     .ant-card-body {
       border-top: 1px solid;
     }
+    .ant-card-head {
+      margin-bottom: 0px !important;
+    }
+  }
+  .ant-upload-list-item-container {
+    height: 206px !important;
+    width: 192px !important;
+    object-fit: contain;
   }
 `;

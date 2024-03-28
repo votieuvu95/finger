@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+.ant-tabs-nav-wrap {
+  justify-content: center;
+}
+.ant-tabs-tab {
+  font-size: 25px !important;
+}

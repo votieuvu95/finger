@@ -4,12 +4,8 @@ import Image from "../src/Image";
 import { Upload, Card, Tabs } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import axios from "axios";
-import Search from "../src/Search";
-import Map from "../src/Map";
-import "./App.css"
-const { TabPane } = Tabs;
 
-const HomePage = () => {
+const Search = () => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
   const [state, _setState] = useState({
@@ -81,17 +77,54 @@ const HomePage = () => {
       </div>
     </button>
   );
+  console.log("state?.file", state?.finger_position);
 
   return (
-    <Tabs defaultActiveKey={"0"}>
-      <TabPane tab="Searching" key={0} style={{ fontSize: "25px" }}>
-        <Search />
-      </TabPane>
-      <TabPane tab="Matching" key={1} style={{ fontSize: "25px" }}>
-        <Map />
-      </TabPane>
-    </Tabs>
+    <Main>
+      <div className="image">
+        <div className="item">
+          <div style={{ marginBottom: "5px" }}>Ảnh mẫu</div>
+          <Upload
+            name="avatar"
+            listType="picture-card"
+            className="avatar-uploader"
+            showUploadList={false}
+            action="https://run.mocky.io/v3/435e224c-44fb-4773-9faf-380c5e6a2188"
+            onChange={handleChange}
+            accept=".png,.jpg,.jpeg,.bmp"
+            customRequest={({ onSuccess }) => {
+              onSuccess(null, {});
+            }}
+          >
+            {imageUrl ? (
+              <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
+            ) : (
+              uploadButton
+            )}
+          </Upload>
+        </div>
+        <div className="item" style={{ paddingLeft: "30px" }}>
+          <div style={{ marginBottom: "5px" }}>Ảnh khớp</div>
+          <Image width={192} height={206} src={state?.file || "error"} />
+        </div>
+      </div>
+
+      <Card title="Thông tin">
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p>Tên</p> :{" "}
+          <b  style={{ paddingLeft: "10px" }}>{state?.person_name}</b>
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p >Hand</p> :{" "}
+          <b style={{ paddingLeft: "10px" }}>{state?.finger_position?.split("_")?.[1]}</b>
+        </div>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <p >Position</p> :{" "}
+          <b style={{ paddingLeft: "10px" }}>{state?.finger_position?.split("_")?.[2]}</b>
+        </div>
+      </Card>
+    </Main>
   );
 };
 
-export default HomePage;
+export default Search;
